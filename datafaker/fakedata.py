@@ -230,5 +230,9 @@ class FackData(object):
         if keyword in self.faker_funcs:
             method = getattr(self.faker, keyword, None)
             if callable(method):
-                return method(*args)
+                if keyword in ['longitude','latitude']:
+                   #经纬度转为str,解决无法被json格式化的问题
+                   return str(method(*args))
+                else:
+                   return method(*args)
         return None
